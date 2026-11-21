@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:renote_mobile/models/marketplace_item_model.dart';
 import 'package:renote_mobile/providers/marketplace_provider.dart';
 import 'package:renote_mobile/providers/quotation_provider.dart';

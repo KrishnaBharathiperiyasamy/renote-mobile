@@ -1745,32 +1745,6 @@ class _QuotationsScreenState extends ConsumerState<QuotationsScreen> {
                             color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
                           ),
                         ),
-                        const SizedBox(height: 20),
-                        ElevatedButton.icon(
-                          onPressed: () => context.push('/quotations/create'),
-                          icon: const Icon(
-                            LucideIcons.plus,
-                            size: 18,
-                            color: Colors.white,
-                          ),
-                          label: const Text(
-                            'Create New Estimate',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primary,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 20,
-                              vertical: 12,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ),
