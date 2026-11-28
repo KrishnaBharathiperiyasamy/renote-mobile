@@ -1,0 +1,15 @@
+{
+  "name": "myreno-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ReNote unified workspace dev automation",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/start-dev.mjs",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev:backend": "npm --prefix backend run dev",
+    "tunnel": "node scripts/tunnel.mjs",
+    "status": "node scripts/check-ports.mjs"
+  }
+}
+

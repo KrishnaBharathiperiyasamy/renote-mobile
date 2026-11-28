@@ -1,0 +1,56 @@
+# Dependencies
+node_modules/
+
+# Environment & Secrets
+.env
+.env.local
+.env.development
+.env.development.local
+.env.production
+.env.production.local
+.env.*
+*.env
+!.env.example
+
+# Uploads & Media Storage
+uploads/
+temp/
+tmp/
+tmp_zip/
+temp.txt
+public/downloads/
+public/rendered/
+public/uploads/
+public/temp/
+
+# Logs
+*.log
+server.log
+logs/
+npm-debug.log*
+
+# Build, Cache & Binaries
+dist/
+build/
+bin/
+.cache/
+
+# Security & Keys
+*.pem
+*.key
+*.cert
+
+# Test & Scratch scripts
+test_sa.mjs
+scratch/
+
+# OS & Editor
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo

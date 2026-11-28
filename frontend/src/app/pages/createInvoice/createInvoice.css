@@ -1,0 +1,160 @@
+/* Sticky header for screen only */
+.thead.sticky {
+  background: #f3f4f6; /* same as bg-gray-100 */
+  z-index: 20;
+}
+
+/* Default desktop font size */
+.dynamic-font {
+  font-size: 16px; /* cap value */
+}
+
+/* Bigger than default for IDs */
+.estimate-id-font {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* Responsive scaling for smaller screens */
+@media (max-width: 767px) {
+  .estimate-id-font {
+    font-size: calc(100vw * 0.022);
+    max-font-size: 22px;
+  }
+
+  .dynamic-font {
+    font-size: calc(100vw * 0.017);
+    max-font-size: 18px;
+  }
+}
+/* Small HSN font */
+.hsn-font {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+@media (max-width: 767px) {
+  .hsn-font {
+    font-size: calc(100vw * 0.018);
+    max-font-size: 16px;
+  }
+}
+
+.hsn-button {
+  font-size: 12px; /* default desktop size */
+  padding: 2px 6px; /* adjust as needed */
+}
+
+@media (max-width: 767px) {
+  .hsn-button {
+    font-size: 10px; /* smaller on mobile */
+    padding: 1px 4px;
+  }
+}
+
+/* ===============================
+   PRINT STYLES
+================================ */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 5mm;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  html,
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+    transform: none !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  .print-sheet {
+    padding: 2mm 4mm !important;
+    margin: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+  }
+
+  .print-sheet > div {
+    margin: 0 !important;
+    max-width: none !important;
+    padding: 0 !important;
+  }
+
+  .dynamic-font {
+    font-size: 14px !important;
+    line-height: 1.35 !important;
+  }
+
+  .estimate-id-font {
+    font-size: 22px !important;
+    font-weight: 800 !important;
+  }
+
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+  }
+
+  th,
+  td {
+    font-size: 12.5px !important;
+    padding: 8px 10px !important;
+    margin: 0 !important;
+    vertical-align: middle !important;
+  }
+
+  /* Hide toasts */
+  #toast-container,
+  .Toastify__toast-container {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* Reset sticky in print */
+  .sticky {
+    position: static !important;
+    box-shadow: none !important;
+  }
+
+  /* Page break rules */
+  tr, td, th {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  thead {
+    display: table-header-group !important;
+  }
+
+  tfoot {
+    display: table-footer-group !important;
+  }
+
+  .no-break {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .keep-with-total {
+    page-break-before: avoid;
+    break-before: avoid;
+  }
+
+  .print-full-height {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+}
+
+html {
+  scrollbar-gutter: stable both-edges;
+}

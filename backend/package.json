@@ -1,0 +1,63 @@
+{
+  "name": "krish-estimator",
+  "version": "1.0.0",
+  "description": "api's for krish estimator",
+  "license": "ISC",
+  "author": "shageen fathima",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "start": "node --env-file=.env.production server.js",
+    "dev": "nodemon --exec \"node --env-file=.env.development server.js\""
+  },
+  "dependencies": {
+    "archiver": "^7.0.1",
+    "axios": "^1.11.0",
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.3",
+    "body-parser": "^2.2.0",
+    "canvas": "^3.2.0",
+    "cors": "^2.8.5",
+    "csv-parser": "^3.2.0",
+    "csvtojson": "^2.0.10",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "express-jwt": "^8.5.1",
+    "express-rate-limit": "^8.1.0",
+    "fs": "^0.0.1-security",
+    "fs-extra": "^11.3.2",
+    "helmet": "^8.1.0",
+    "json2csv": "^6.0.0-alpha.2",
+    "jsonwebtoken": "^9.0.2",
+    "jszip": "^3.10.1",
+    "mongoose": "^8.19.1",
+    "multer": "^2.0.2",
+    "nanoid": "^5.1.6",
+    "node-fetch": "^3.3.2",
+    "nodemailer": "^7.0.6",
+    "openai": "^6.3.0",
+    "otpauth": "^9.5.0",
+    "pdfjs-dist": "^2.16.105",
+    "puppeteer": "^24.17.1",
+    "puppeteer-screen-recorder": "^3.0.6",
+    "qrcode": "^1.5.4",
+    "razorpay": "^2.9.6",
+    "sanitize-html": "^2.17.0",
+    "sharp": "^0.34.5",
+    "socket.io": "^4.8.1",
+    "twilio": "^5.10.4",
+    "unzipper": "^0.12.3",
+    "xlsx": "^0.18.5",
+    "xml2js": "^0.6.2",
+    "xmlbuilder2": "^3.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "overrides": {
+    "puppeteer-screen-recorder": {
+      "puppeteer": "$puppeteer"
+    }
+  }
+}
