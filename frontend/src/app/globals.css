@@ -1,0 +1,874 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&display=swap');
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --font-geist-sans: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-geist-mono: "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --font-manrope: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --background: #0D0E12;
+  --foreground: #E0E2EC;
+  --sidebar-bg: #16181E;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --card-bg: #16181E;
+  --card-border: rgba(255, 255, 255, 0.08);
+  --input-bg: #1B1E26;
+  --text-primary: #FFFFFF;
+  --text-secondary: #8E95A5;
+  --accent-orange: #FF5722;
+}
+
+html.dark, body.dark, :root:has(.dark) {
+  --background: #0D0E12;
+  --foreground: #E0E2EC;
+  --sidebar-bg: #16181E;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --card-bg: #16181E;
+  --card-border: rgba(255, 255, 255, 0.08);
+  --input-bg: #1B1E26;
+  --text-primary: #FFFFFF;
+  --text-secondary: #8E95A5;
+}
+
+html:not(.dark) {
+  --background: #F8F9FC;
+  --foreground: #111827;
+  --sidebar-bg: #FFFFFF;
+  --sidebar-border: #E5E7EB;
+  --card-bg: #FFFFFF;
+  --card-border: #E5E7EB;
+  --input-bg: #F3F4F6;
+  --text-primary: #111827;
+  --text-secondary: #6B7280;
+}
+
+html, body {
+  color-scheme: dark;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scrollbar-gutter: stable;
+}
+
+html:not(.dark), body:not(.dark) {
+  color-scheme: light;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   CUSTOM THEME-AWARE SCROLLBARS (LIGHT & DARK MODES)
+══════════════════════════════════════════════════════════════════════ */
+
+/* Global Dark Mode Scrollbars */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #2A2D35;
+  border-radius: 9999px;
+  border: 1.5px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #FF5722;
+}
+
+/* Global Light Mode Scrollbars */
+html:not(.dark) ::-webkit-scrollbar-track,
+body:not(.dark) ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+html:not(.dark) ::-webkit-scrollbar-thumb,
+body:not(.dark) ::-webkit-scrollbar-thumb {
+  background-color: #E2E8F0;
+  border-radius: 9999px;
+  border: 1.5px solid transparent;
+  background-clip: padding-box;
+}
+
+html:not(.dark) ::-webkit-scrollbar-thumb:hover,
+body:not(.dark) ::-webkit-scrollbar-thumb:hover {
+  background-color: #FF5722;
+}
+
+/* Firefox scrollbar support */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #2A2D35 transparent;
+}
+
+html:not(.dark) * {
+  scrollbar-color: #CBD5E1 transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@layer components {
+  .input-style {
+    @apply px-4 py-3 text-sm border border-black rounded-md outline-none focus:border-orange-500 transition;
+  }
+}
+
+.rsw-editor {
+  background: transparent !important;
+  border: none !important;
+}
+
+.rsw-ce {
+  background: transparent !important;
+}
+
+@keyframes heartbeat-glow {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.5)); }
+  25% { transform: scale(1.15); filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9)); }
+  50% { transform: scale(1); filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.5)); }
+  75% { transform: scale(1.1); filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.7)); }
+}
+
+.heart-beat {
+  animation: heartbeat-glow 3s ease-in-out infinite;
+}
+
+/* ── Emoji animations (used in poster description editor) ── */
+@keyframes ep-pulse-kf  { 0%,100%{transform:scale(1)}          50%{transform:scale(1.3)} }
+@keyframes ep-bounce-kf { 0%,100%{transform:translateY(0)}      50%{transform:translateY(-6px)} }
+@keyframes ep-shake-kf  { 0%,100%{transform:rotate(0deg)}       25%{transform:rotate(-14deg)} 75%{transform:rotate(14deg)} }
+@keyframes ep-glow-kf   { 0%,100%{filter:brightness(1)}         50%{filter:brightness(1.6) drop-shadow(0 0 4px gold)} }
+@keyframes ep-float-kf  { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-5px) scale(1.12)} }
+
+.ep-pulse  { display:inline-block; animation: ep-pulse-kf  1.2s ease-in-out infinite; }
+.ep-bounce { display:inline-block; animation: ep-bounce-kf 1s   ease-in-out infinite; }
+.ep-shake  { display:inline-block; animation: ep-shake-kf  0.8s ease-in-out infinite; }
+.ep-glow   { display:inline-block; animation: ep-glow-kf   1.4s ease-in-out infinite; }
+.ep-float  { display:inline-block; animation: ep-float-kf  2s   ease-in-out infinite; }
+
+/* Compact toolbar for desktop floating mode */
+.toolbar-desktop { gap: 0 !important; }
+.toolbar-desktop button { padding: 3px !important; font-size: 13px !important; }
+.toolbar-desktop > div { gap: 0 !important; }
+.toolbar-desktop .w-px { margin-left: 4px !important; margin-right: 4px !important; }
+.toolbar-desktop svg { width: 13px !important; height: 13px !important; }
+
+@font-face {
+    font-family: "Reggae One";
+    src: url("/ReggaeOne-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
+
+.title-font {
+    font-family: "Reggae One";
+}
+.recording-text-scale {
+    font-size: 1.5em !important;     /* increases only when recording */
+    line-height: 1.4 !important;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none !important;  /* IE and Edge */
+  scrollbar-width: none !important;     /* Firefox */
+}
+.pausedVideo {
+  filter: blur(6px) brightness(0.5);
+  transform: scale(1.05); /* slight zoom effect */
+}
+
+@keyframes bigHeartPop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  30% {
+    transform: scale(1.3);
+    opacity: 1;
+  }
+  60% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+.animate-big-heart {
+  animation: bigHeartPop 1s ease-out forwards;
+}
+.poster-container {
+  touch-action: pinch-zoom pan-y;
+}
+
+/* ── Advanced Frame Animations (Frames 41–50) ── */
+@keyframes neon-border-flow {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes shimmer-slide {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.4; box-shadow: 0 0 15px 2px currentColor; }
+  50%      { opacity: 1;   box-shadow: 0 0 40px 8px currentColor; }
+}
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+@keyframes rotate-hue {
+  0%   { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+@keyframes scan-line {
+  0%   { top: -4px; }
+  100% { top: 100%; }
+}
+@keyframes flicker-neon {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; text-shadow: inherit; }
+  20%, 24%, 55% { opacity: 0.6; text-shadow: none; }
+}
+@keyframes aurora-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes gold-shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes circuit-dash {
+  0%   { stroke-dashoffset: 20; }
+  100% { stroke-dashoffset: 0; }
+}
+@keyframes spotlight-pan {
+  0%   { background-position: 30% 30%; }
+  50%  { background-position: 70% 50%; }
+  100% { background-position: 30% 30%; }
+}
+
+.adv-neon-border   { animation: neon-border-flow 4s ease infinite; background-size: 300% 300%; }
+.adv-shimmer       { animation: shimmer-slide 2.5s ease-in-out infinite; }
+.adv-glow-pulse    { animation: glow-pulse 2.5s ease-in-out infinite; }
+.adv-float         { animation: float-y 3s ease-in-out infinite; }
+.adv-hue-rotate    { animation: rotate-hue 8s linear infinite; }
+.adv-scanline::after {
+  content: '';
+  position: absolute; left: 0; width: 100%; height: 4px;
+  background: linear-gradient(transparent, rgba(0,255,255,0.12), transparent);
+  animation: scan-line 3s linear infinite;
+  pointer-events: none; z-index: 5;
+}
+.adv-neon-flicker  { animation: flicker-neon 4s ease-in-out infinite; }
+.adv-aurora-bg     { animation: aurora-shift 6s ease infinite; background-size: 400% 400%; }
+.adv-gold-shimmer  { animation: gold-shimmer 3s linear infinite; background-size: 200% auto; }
+.adv-circuit-dash  { animation: circuit-dash 2s linear infinite; }
+.adv-spotlight     { animation: spotlight-pan 8s ease-in-out infinite; }
+
+/* ───── Scroll-down hint (poster view) ──────────────────────────────────── */
+@keyframes scrollHintFadeIn {
+  0%   { opacity: 0; transform: translate(-50%, 18px) scale(0.95); }
+  100% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+@keyframes scrollHintFadeOut {
+  0%   { opacity: 1; transform: translate(-50%, 0) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, 18px) scale(0.95); pointer-events: none; }
+}
+
+/* Floating animated arrow — modern, smooth, elegant */
+@keyframes scrollArrowBounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(10px); }
+}
+@keyframes scrollArrowGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 0 0 rgba(249,115,22,0.55),
+      0 8px 24px -6px rgba(249,115,22,0.45);
+  }
+  50% {
+    box-shadow:
+      0 0 0 14px rgba(249,115,22,0),
+      0 12px 28px -6px rgba(249,115,22,0.6);
+  }
+}
+@keyframes scrollArrowRingPulse {
+  0%   { transform: scale(1);   opacity: 0.6; }
+  100% { transform: scale(1.9); opacity: 0;   }
+}
+@keyframes scrollArrowShine {
+  0%   { transform: translateX(-120%) skewX(-20deg); }
+  60%  { transform: translateX(220%)  skewX(-20deg); }
+  100% { transform: translateX(220%)  skewX(-20deg); }
+}
+@keyframes scrollLabelShimmer {
+  0%   { background-position: -150% center; }
+  100% { background-position: 250% center; }
+}
+
+.scroll-hint {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  z-index: 55;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  pointer-events: none;
+  user-select: none;
+  animation: scrollHintFadeIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.scroll-hint--hide {
+  animation: scrollHintFadeOut 0.45s ease forwards;
+}
+
+/* Shimmering label */
+.scroll-hint__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.55) 0%,
+    rgba(255,255,255,1)    50%,
+    rgba(255,255,255,0.55) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: scrollLabelShimmer 2.4s linear infinite;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.35);
+  filter: drop-shadow(0 1px 4px rgba(0,0,0,0.45));
+}
+
+/* Glowing circular arrow button */
+.scroll-hint__arrow {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  color: #fff;
+  overflow: hidden;
+  animation:
+    scrollArrowBounce 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite,
+    scrollArrowGlow   2s   ease-in-out infinite;
+}
+.scroll-hint__arrow svg {
+  width: 16px;
+  height: 16px;
+  stroke: #fff;
+  stroke-width: 2.5;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.35));
+}
+@media (min-width: 768px) {
+  .scroll-hint__arrow { width: 46px; height: 46px; }
+  .scroll-hint__arrow svg { width: 22px; height: 22px; }
+}
+/* Expanding pulse rings */
+.scroll-hint__arrow::before,
+.scroll-hint__arrow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 2px solid rgba(249,115,22,0.7);
+  animation: scrollArrowRingPulse 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+.scroll-hint__arrow::after { animation-delay: 1s; }
+/* Diagonal shine sweep */
+.scroll-hint__arrow > .scroll-hint__shine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.55) 50%,
+    transparent 100%
+  );
+  animation: scrollArrowShine 2.6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Light theme adjustments */
+.scroll-hint--light .scroll-hint__label {
+  background: linear-gradient(
+    90deg,
+    rgba(60,60,60,0.45) 0%,
+    rgba(20,20,20,1)    50%,
+    rgba(60,60,60,0.45) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 1px 3px rgba(255,255,255,0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-hint,
+  .scroll-hint__arrow,
+  .scroll-hint__arrow::before,
+  .scroll-hint__arrow::after,
+  .scroll-hint__shine,
+  .scroll-hint__label { animation: none !important; }
+}
+
+/* Gradient text utility */
+.adv-gradient-text {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Neon text shadow presets */
+.neon-cyan   { text-shadow: 0 0 7px #0ff, 0 0 20px #0ff, 0 0 40px #0ff, 0 0 80px #088; }
+.neon-pink   { text-shadow: 0 0 7px #f0f, 0 0 20px #f0f, 0 0 40px #f0f, 0 0 80px #808; }
+.neon-green  { text-shadow: 0 0 7px #0f0, 0 0 20px #0f0, 0 0 40px #0f0, 0 0 80px #080; }
+.neon-orange { text-shadow: 0 0 7px #fa0, 0 0 20px #fa0, 0 0 40px #fa0, 0 0 80px #840; }
+
+/* Glassmorphism card */
+.glass-card {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+/* View mode: full-width poster on mobile, no padding */
+.view-mode .poster-container {
+  padding: 0 !important;
+}
+.view-mode .frame {
+  width: 100vw !important;
+  height: calc(100vw * var(--poster-ratio, 1)) !important;
+  min-height: unset !important;
+  font-size: 13px !important;
+  border-width: 2px !important;
+}
+@media (min-width: 768px) {
+
+  .view-mode .frame {
+    width: var(--poster-w, 550px) !important;
+    height: var(--poster-h, 550px) !important;
+    min-height: unset !important;
+    font-size: 16px !important;
+    border-width: 3px !important;
+  }
+}
+
+/* ── Poster frame: always render at native resolution, zoom to fit ── */
+.poster-frame-wrapper {
+  zoom: var(--poster-scale, 1);
+}
+.poster-frame-wrapper .frame {
+  width: var(--poster-w, 550px) !important;
+  height: var(--poster-h, 550px) !important;
+  min-height: unset !important;
+  overflow: hidden;
+  border-width: 4px !important;
+}
+/* ── Mobile-only readability boost for ALL poster frames ─────────────────
+   Most frames set explicit Tailwind text classes (text-xs, text-sm, text-[10px]…)
+   on each element, so a single base font bump on .frame won't propagate.
+   These rules increase every text-size class actually used inside frames
+   without touching individual frame components. Edit values here to tune all
+   posters at once. */
+@media (max-width: 767px) {
+  /* IMPORTANT: The frame renders at native 550px and is scaled down on mobile
+     via `zoom: var(--poster-scale)` (~0.55–0.65 on phones). So values here
+     are INSIDE-CANVAS sizes; visible size ≈ value × poster-scale.
+     We push px values aggressively so visible text looks legible. */
+
+  /* Base font on the frame itself (overrides Tailwind text-[11.5px]) */
+  .poster-frame-wrapper .frame,
+  .view-mode .frame,
+  .poster-container .frame {
+    font-size: 16px !important;
+  }
+
+  /* Tailwind utility classes commonly used inside frames */
+  .frame .text-xs   { font-size: 14px !important; line-height: 1.25 !important; }
+  .frame .text-sm   { font-size: 16px !important; line-height: 1.3  !important; }
+  .frame .text-base { font-size: 18px !important; line-height: 1.3  !important; }
+  .frame .text-lg   { font-size: 20px !important; line-height: 1.3  !important; }
+  .frame .text-xl   { font-size: 24px !important; line-height: 1.25 !important; }
+  .frame .text-2xl  { font-size: 28px !important; line-height: 1.2  !important; }
+
+  /* Tailwind arbitrary px classes used inside frames (text-[10px], etc.) */
+  .frame [class*="text-[10px]"]    { font-size: 13px !important; }
+  .frame [class*="text-[11px]"]    { font-size: 14px !important; }
+  .frame [class*="text-[11.5px]"]  { font-size: 15px !important; }
+  .frame [class*="text-[12px]"]    { font-size: 16px !important; }
+  .frame [class*="text-[13px]"]    { font-size: 18px !important; }
+
+  /* Editor (Specs / description) — react-simple-wysiwyg renders into .rsw-ce */
+  .frame .rsw-ce,
+  .frame [contenteditable="true"]  { font-size: 14px !important; line-height: 1.35 !important; }
+
+  /* Inputs (title, product name, price) */
+  .frame input[type="text"],
+  .frame input[type="number"]      { font-size: inherit !important; }
+}
+/* View mode: same zoom, just ensure no max clamp */
+.view-mode .poster-frame-wrapper .frame {
+  max-width: none !important;
+  max-height: none !important;
+}
+
+/* Slightly thicker text/input box borders across frames */
+.poster-frame-wrapper .frame input[type="text"],
+.poster-frame-wrapper .frame input[type="number"],
+.poster-frame-wrapper .frame textarea,
+.poster-frame-wrapper .frame .rsw-ce,
+.poster-frame-wrapper .frame [contenteditable="true"] {
+  border-width: calc(2px * var(--textbox-border-boost, 1)) !important;
+}
+
+/* Aspect ratio selector popup animation */
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateX(8px) scale(0.95); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+/* ── Custom color overrides via CSS variables ── */
+.poster-frame-wrapper.custom-colors .frame {
+  background: var(--custom-bg) !important;
+  border-color: var(--custom-border) !important;
+}
+/* Footer background follows border color */
+.poster-frame-wrapper.custom-colors .frame .footer {
+  background-color: var(--custom-border) !important;
+}
+/* Frame13 header background follows border color */
+.poster-frame-wrapper.custom-colors .frame[data-frame-type="33"] > div:first-child {
+  background-color: var(--custom-border) !important;
+}
+/* Let inputs keep transparent bg */
+.poster-frame-wrapper.custom-colors .frame input[type="text"],
+.poster-frame-wrapper.custom-colors .frame .rsw-ce {
+  background: transparent !important;
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+   Premium frames (frame15..frame26) — when the user picks a color in the
+   palette, derive the neon glow ring, title glow, and footer top-glow from
+   --custom-border using color-mix() so the whole "premium glowy highlighter"
+   look re-skins to the chosen palette (not just the border).
+   ────────────────────────────────────────────────────────────────────── */
+.poster-frame-wrapper.custom-colors.premium-frame .frame {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--custom-border) 38%, transparent),
+    0 0 22px color-mix(in srgb, var(--custom-border) 40%, transparent),
+    0 0 42px color-mix(in srgb, var(--custom-border) 30%, transparent) !important;
+}
+
+.poster-frame-wrapper.custom-colors.premium-frame .frame .title {
+  color: color-mix(in srgb, var(--custom-border) 65%, #ffffff) !important;
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--custom-border) 78%, transparent),
+    0 0 20px color-mix(in srgb, var(--custom-border) 48%, transparent) !important;
+}
+
+.poster-frame-wrapper.custom-colors.premium-frame .frame .title input[type="text"] {
+  color: color-mix(in srgb, var(--custom-border) 65%, #ffffff) !important;
+  border-bottom-color: color-mix(in srgb, var(--custom-border) 70%, transparent) !important;
+}
+
+/* Footer: keep the original "double shaded" premium gradient look but re-skin
+   it from the chosen border color. Each end is the chosen color blended with
+   a different neon companion (violet on the left, cyan on the right) so the
+   footer always shows two distinct yet related tones. */
+.poster-frame-wrapper.custom-colors.premium-frame .frame .footer {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--custom-border) 60%, #a855f7) 0%,
+    color-mix(in srgb, var(--custom-border) 60%, #22d3ee) 100%
+  ) !important;
+  background-image: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--custom-border) 60%, #a855f7) 0%,
+    color-mix(in srgb, var(--custom-border) 60%, #22d3ee) 100%
+  ) !important;
+  animation: none !important;
+  box-shadow: 0 -6px 20px color-mix(in srgb, var(--custom-border) 38%, transparent) !important;
+}
+/* ──────────────────────────────────────────────────────────────────────
+   Premium frame ambient animations — applied to ALL premium frames whether
+   or not a custom palette is active. Adds a slow diagonal shimmer wave
+   sweeping across the frame, a gentle pulsing outer halo, and a subtle
+   floating motion to the title for a "live neon" feel.
+   ────────────────────────────────────────────────────────────────────── */
+.poster-frame-wrapper.premium-frame .frame {
+  position: relative;
+  animation: premiumHaloPulse 4.8s ease-in-out infinite;
+}
+
+.poster-frame-wrapper.premium-frame .frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.08) 48%,
+    rgba(255, 255, 255, 0.18) 50%,
+    rgba(255, 255, 255, 0.08) 52%,
+    transparent 60%,
+    transparent 100%
+  );
+  background-size: 220% 220%;
+  animation: premiumShimmerWave 5.5s linear infinite;
+  mix-blend-mode: screen;
+  opacity: 0.85;
+}
+
+.poster-frame-wrapper.premium-frame .frame .title {
+  animation: premiumTitleFloat 4s ease-in-out infinite;
+}
+
+@keyframes premiumShimmerWave {
+  0%   { background-position: -120% -120%; }
+  100% { background-position: 220% 220%; }
+}
+
+@keyframes premiumHaloPulse {
+  0%, 100% { filter: brightness(1) saturate(1); }
+  50%      { filter: brightness(1.06) saturate(1.12); }
+}
+
+@keyframes premiumTitleFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-1.5px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .poster-frame-wrapper.premium-frame .frame,
+  .poster-frame-wrapper.premium-frame .frame::before,
+  .poster-frame-wrapper.premium-frame .frame .title {
+    animation: none !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+   Sticker Gallery Badge Animations:
+   Subtle floating, gentle pulse, occasional shine/glow, smooth hover,
+   and playful spring bounce on click.
+   ────────────────────────────────────────────────────────────────────── */
+
+@keyframes stickerGalleryFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes stickerGalleryPulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.18));
+  }
+  50% {
+    transform: scale(1.035);
+    filter: drop-shadow(0 5px 14px var(--badge-glow-color, rgba(255, 87, 34, 0.4)));
+  }
+}
+
+@keyframes stickerGalleryShine {
+  0%, 60% {
+    transform: translateX(-150%) skewX(-20deg);
+    opacity: 0;
+  }
+  65% {
+    opacity: 0.6;
+  }
+  80% {
+    transform: translateX(200%) skewX(-20deg);
+    opacity: 0.9;
+  }
+  85%, 100% {
+    transform: translateX(220%) skewX(-20deg);
+    opacity: 0;
+  }
+}
+
+@keyframes stickerGalleryGlow {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes stickerGalleryBounce {
+  0% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(0.88) rotate(-2deg);
+  }
+  45% {
+    transform: scale(1.18) rotate(2deg);
+  }
+  70% {
+    transform: scale(0.95) rotate(-1deg);
+  }
+  85% {
+    transform: scale(1.05) rotate(0.5deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.sticker-gallery-badge-wrapper {
+  animation: stickerGalleryFloat 3.8s ease-in-out infinite;
+  will-change: transform;
+}
+
+.sticker-gallery-badge-pulse {
+  animation: stickerGalleryPulse 3.8s ease-in-out infinite;
+  will-change: transform, filter;
+}
+
+.sticker-gallery-shine-beam {
+  animation: stickerGalleryShine 4.8s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.sticker-gallery-glow-bg {
+  animation: stickerGalleryGlow 4.2s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.sticker-gallery-bouncing {
+  animation: stickerGalleryBounce 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sticker-gallery-badge-wrapper,
+  .sticker-gallery-badge-pulse,
+  .sticker-gallery-shine-beam,
+  .sticker-gallery-glow-bg,
+  .sticker-gallery-bouncing {
+    animation: none !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+   Inspector / Style Panel Smooth Scroll & Visible Scrollbar
+   ────────────────────────────────────────────────────────────────────── */
+.style-panel-scroll-area {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  overscroll-behavior: contain !important;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+}
+
+/* Light mode scrollbar */
+html:not(.dark) .style-panel-scroll-area {
+  scrollbar-color: rgba(0, 0, 0, 0.28) rgba(0, 0, 0, 0.04);
+}
+
+html:not(.dark) .style-panel-scroll-area::-webkit-scrollbar {
+  width: 8px;
+}
+
+html:not(.dark) .style-panel-scroll-area::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: 4px;
+}
+
+html:not(.dark) .style-panel-scroll-area::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.28);
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: background-color 0.2s ease;
+}
+
+html:not(.dark) .style-panel-scroll-area::-webkit-scrollbar-thumb:hover {
+  background: #FF5722;
+}
+
+/* Dark mode scrollbar */
+html.dark .style-panel-scroll-area,
+.dark .style-panel-scroll-area {
+  scrollbar-color: rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.04);
+}
+
+html.dark .style-panel-scroll-area::-webkit-scrollbar,
+.dark .style-panel-scroll-area::-webkit-scrollbar {
+  width: 8px;
+}
+
+html.dark .style-panel-scroll-area::-webkit-scrollbar-track,
+.dark .style-panel-scroll-area::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 4px;
+}
+
+html.dark .style-panel-scroll-area::-webkit-scrollbar-thumb,
+.dark .style-panel-scroll-area::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: background-color 0.2s ease;
+}
+
+html.dark .style-panel-scroll-area::-webkit-scrollbar-thumb:hover,
+.dark .style-panel-scroll-area::-webkit-scrollbar-thumb:hover {
+  background: #FF5722;
+}

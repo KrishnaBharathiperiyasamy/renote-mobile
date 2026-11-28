@@ -1,0 +1,124 @@
+/* Sticky header for screen only */
+.thead.sticky {
+  background: #f3f4f6; /* same as bg-gray-100 */
+  z-index: 20;
+}
+
+/* Default desktop font size */
+.dynamic-font {
+  font-size: 16px; /* cap value */
+}
+
+/* Bigger than default for IDs */
+.estimate-id-font {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* Responsive scaling for smaller screens */
+@media (max-width: 767px) {
+  .estimate-id-font {
+    font-size: calc(100vw * 0.022);
+    max-font-size: 22px;
+  }
+
+  .dynamic-font {
+    font-size: calc(100vw * 0.017);
+    max-font-size: 18px;
+  }
+}
+
+/* Small HSN font */
+.hsn-font {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+@media (max-width: 767px) {
+  .hsn-font {
+    font-size: calc(100vw * 0.018);
+    max-font-size: 16px;
+  }
+}
+
+.hsn-button {
+  font-size: 12px; /* default desktop size */
+  padding: 2px 6px; /* adjust as needed */
+}
+
+@media (max-width: 767px) {
+  .hsn-button {
+    font-size: 10px; /* smaller on mobile */
+    padding: 1px 4px;
+  }
+}
+
+/* ===============================
+   PRINT STYLES
+================================ */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 8mm;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  body {
+    background: white !important;
+    color: #111827 !important;
+    font-size: 12px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  header,
+  footer,
+  nav,
+  aside,
+  .DesktopSidebar,
+  [class*="sidebar"],
+  [class*="Sidebar"],
+  .print\:hidden,
+  .Toastify,
+  [role="dialog"] {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  #estimate-bill-printable {
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    background: white !important;
+    color: #111827 !important;
+  }
+
+  table {
+    page-break-inside: auto;
+    width: 100% !important;
+  }
+
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tfoot {
+    display: table-footer-group;
+  }
+}
